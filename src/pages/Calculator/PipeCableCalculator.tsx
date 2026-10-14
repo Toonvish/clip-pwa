@@ -45,17 +45,20 @@ const PipeCableCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 
 	const resetValues = () => setPipeValues(defaultPipeValues);
 
-	const isPressureError =
-		pipeValues.pressureLoss !== undefined &&
-		pipeValues.netPressure !== undefined &&
-		pipeValues.pressureLoss > pipeValues.netPressure &&
-		selected !== 'pressureLoss';
-
 	const result = useMemo(() => {
 		const { volume = 0, length = 0, pressureLoss = 0, netPressure = 0, diameter = 0 } = pipeValues;
 		if (!hasRequiredValues(pipeValues, selected)) return;
 		return pipeCalculator(volume, volumeUnit, length, pressureLoss, netPressure, diameter, selected);
 	}, [pipeValues, selected, volumeUnit]);
+
+	const effectivePressureLoss = selected === 'pressureLoss' ? result?.result : pipeValues.pressureLoss;
+	const effectiveNetPressure = selected === 'netPressure' ? result?.result : pipeValues.netPressure;
+	const isPressureError =
+		effectivePressureLoss !== undefined &&
+		effectiveNetPressure !== undefined &&
+		Number.isFinite(effectivePressureLoss) &&
+		Number.isFinite(effectiveNetPressure) &&
+		effectivePressureLoss > effectiveNetPressure;
 
 	const getCalcValue = <Key extends keyof PipeValues>(key: Key) => {
 		if (key === selected) return checkNaN(result?.result);
@@ -93,6 +96,7 @@ const PipeCableCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 					radioValue={'pressureLoss'}
 					label={'Druckverluste [bar]:'}
 					onNumberChange={updatePipeValues('pressureLoss')}
+					errorText={isPressureError ? 'Der Druckverlust kann nicht höher als der Netzdruck sein' : undefined}
 				/>
 				<LabelRadioInput
 					number={getCalcValue('netPressure')}
