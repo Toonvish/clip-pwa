@@ -9,43 +9,46 @@
 		"test": "bun test",
 		"test:watch": "bun test --watch",
 		"commit": "git add * && cz",
-		"check": "biome check --apply .",
+		"check": "biome check --write .",
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"ci": "biome ci ."
 	},
 	"dependencies": {
-		"@nanostores/react": "^0.7.3",
-		"@tanstack/react-router": "^1.51.2",
+		"@nanostores/react": "^2.0.1",
+		"@tanstack/react-router": "^1.170.44",
 		"clsx": "^2.1.1",
-		"nanostores": "^0.11.3",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
-		"react-error-boundary": "^4.0.13",
-		"react-icons": "^5.3.0",
-		"sass": "^1.77.8"
+		"nanostores": "^1.5.5",
+		"react": "^19.3.0",
+		"react-dom": "^19.3.0",
+		"react-error-boundary": "^6.1.6",
+		"react-icons": "^5.7.0",
+		"sass": "^1.105.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.8.3",
-		"@happy-dom/global-registrator": "^15.3.1",
-		"@testing-library/react": "^16.0.1",
-		"@types/bun": "^1.1.8",
-		"@types/react": "^18.3.4",
-		"@types/react-dom": "^18.3.0",
-		"@vitejs/plugin-react-swc": "^3.7.0",
-		"autoprefixer": "^10.4.20",
-		"commitizen": "^4.3.0",
+		"@biomejs/biome": "2.5.15",
+		"@happy-dom/global-registrator": "^21.0.1",
+		"@tailwindcss/vite": "^4.3.3",
+		"@testing-library/react": "^16.3.3",
+		"@types/bun": "^1.4.3",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
+		"@vitejs/plugin-react-swc": "^4.3.3",
+		"commitizen": "^4.3.2",
 		"cz-conventional-changelog": "^3.3.0",
-		"jsdom": "^25.0.0",
-		"postcss": "^8.4.41",
-		"tailwindcss": "^3.4.10",
-		"typescript": "^5.5.4",
-		"vite": "^5.4.2",
-		"vite-plugin-pwa": "^0.20.1"
+		"jsdom": "^30.1.2",
+		"tailwindcss": "^4.3.3",
+		"typescript": "^7.0.2",
+		"vite": "^8.3.4",
+		"vite-plugin-pwa": "^2.0.0"
 	},
 	"config": {
 		"commitizen": {
 			"path": "cz-conventional-changelog"
 		}
-	}
+	},
+	"trustedDependencies": [
+		"@parcel/watcher",
+		"@swc/core"
+	]
 }

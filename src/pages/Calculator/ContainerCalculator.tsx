@@ -5,7 +5,7 @@ import LabelWrapper from '../../controls/LabelWrapper';
 import Footer from '../../controls/Layout/Footer';
 import RadioGroup from '../../controls/RadioGroup/RadioGroup';
 import { type GetDocValue, useUpdateValue } from '../../hooks/useUpdateValue';
-import { type SelectedContainerValue, containerCalculator } from '../../utils/clipCalc';
+import { containerCalculator, type SelectedContainerValue } from '../../utils/clipCalc';
 import { checkNaN, hasRequiredValues } from '../../utils/helper';
 import type { CalcProps } from '../../utils/types';
 

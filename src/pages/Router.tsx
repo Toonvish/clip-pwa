@@ -1,9 +1,9 @@
 import {
-	Outlet,
 	createHashHistory,
 	createRootRoute,
 	createRoute,
 	createRouter,
+	Outlet,
 } from '@tanstack/react-router';
 import type { FC } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';

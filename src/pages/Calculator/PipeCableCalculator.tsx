@@ -5,7 +5,7 @@ import LabelText from '../../controls/LabelText';
 import Footer from '../../controls/Layout/Footer';
 import RadioGroup from '../../controls/RadioGroup/RadioGroup';
 import { type GetDocValue, useUpdateValue } from '../../hooks/useUpdateValue';
-import { type PipeResult, type SelectedPipeValue, pipeCalculator } from '../../utils/clipCalc';
+import { type PipeResult, pipeCalculator, type SelectedPipeValue } from '../../utils/clipCalc';
 import { checkNaN, hasRequiredValues } from '../../utils/helper';
 import type { CalcProps } from '../../utils/types';
 

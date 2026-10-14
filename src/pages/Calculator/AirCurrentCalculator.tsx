@@ -6,7 +6,7 @@ import Footer from '../../controls/Layout/Footer';
 import RadioButton from '../../controls/RadioGroup/RadioButton';
 import RadioGroup from '../../controls/RadioGroup/RadioGroup';
 import { type GetDocValue, useUpdateValue } from '../../hooks/useUpdateValue';
-import { type SelectedAirCurrentValue, airCurrentCalculator } from '../../utils/clipCalc';
+import { airCurrentCalculator, type SelectedAirCurrentValue } from '../../utils/clipCalc';
 import { checkNaN, hasRequiredValues, round } from '../../utils/helper';
 import type { CalcProps } from '../../utils/types';
 

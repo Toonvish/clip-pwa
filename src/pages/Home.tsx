@@ -23,7 +23,7 @@ const IconLink: FC<IconLinkProps> = ({ to, title, className, children }) => (
 	</Link>
 );
 
-export const iconClassName = 'w-10 h-10 hover:bg-white/25 rounded hover:cursor-pointer';
+export const iconClassName = 'w-10 h-10 hover:bg-white/25 rounded-sm hover:cursor-pointer';
 
 const Home: FC = () => {
 	return (

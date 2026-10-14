@@ -8,7 +8,7 @@ import HelperText from '../../controls/Layout/HelperText';
 import RadioButton from '../../controls/RadioGroup/RadioButton';
 import RadioGroup from '../../controls/RadioGroup/RadioGroup';
 import { useUpdateValue } from '../../hooks/useUpdateValue';
-import { type SelectedLeakageValue, leakageCalculator } from '../../utils/clipCalc';
+import { leakageCalculator, type SelectedLeakageValue } from '../../utils/clipCalc';
 import { hasRequiredValues } from '../../utils/helper';
 import type { CalcProps } from '../../utils/types';
 

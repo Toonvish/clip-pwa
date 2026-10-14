@@ -1,7 +1,7 @@
 import { RouterProvider } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.scss';
+import './index.css';
 import { router } from './pages/Router';
 
 const rootElement = document.getElementById('app');

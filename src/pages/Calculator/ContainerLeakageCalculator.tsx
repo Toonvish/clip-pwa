@@ -32,7 +32,7 @@ const getEmail = (containerLeakageValues: ContainerLeakageValues, leakage: numbe
 
 const ContainerLeakageCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 	const [isMeasuring, setIsMeasuring] = useState<boolean>(false);
-	const intervalRef = useRef<Timer>();
+	const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
 	const [containerLeakageValues, setContainerLeakageValues] = useState<ContainerLeakageValues>(
 		defaultContainerLeakageValues,
 	);

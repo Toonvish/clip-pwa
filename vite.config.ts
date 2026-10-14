@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
 /// <reference types="vitest" />
 import { defineConfig } from 'vite';
@@ -12,6 +13,7 @@ export default defineConfig({
 	},
 	plugins: [
 		react(),
+		tailwindcss(),
 		VitePWA({
 			registerType: 'autoUpdate',
 			manifest: {
