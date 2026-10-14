@@ -49,8 +49,19 @@ describe('condensateCalculator', () => {
 		expect(result.totalLoss).toBeCloseTo(result.waterAmount - result.coldHumidity, 1);
 	});
 	it('treats the pressure as gauge pressure', () => {
-		const abs = condensateCalculator(20, 50, 10, 0, 50, 5, 1);
-		const gauge = condensateCalculator(20, 50, 10, 7, 50, 5, 1);
+		const abs = condensateCalculator(35, 90, 10, 0, 20, 5, 1);
+		const gauge = condensateCalculator(35, 90, 10, 7, 20, 5, 1);
 		expect(abs.remainingHumidity / gauge.remainingHumidity).toBeCloseTo(8, 0);
+	});
+});
+
+describe('condensateCalculator without condensation', () => {
+	it('never reports negative condensate', () => {
+		// 50 °C at 8 bar abs can hold more water than 20 °C / 50 % intake air
+		const result = condensateCalculator(20, 50, 10, 7, 50, 5, 1);
+		expect(result.condensateLoss).toBe(0);
+		expect(result.remainingHumidity).toBe(result.waterAmount);
+		expect(result.coldLoss).toBeGreaterThan(0);
+		expect(result.totalLoss).toBeCloseTo(result.waterAmount - result.coldHumidity, 1);
 	});
 });

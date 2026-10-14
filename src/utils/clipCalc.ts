@@ -240,9 +240,16 @@ export function condensateCalculator(
 ): CondensateResult {
 	const waterAmount = waterAmountCalculator(airTemp, humidity, airDelivery);
 	const absolutePressure = pressure + 1;
-	const remainingHumidity = waterAmountCalculator(coolTemp, 100, airDelivery, absolutePressure);
+	// the air can never hold more water than it took in, if it is not saturated nothing condenses
+	const remainingHumidity = Math.min(
+		waterAmount,
+		waterAmountCalculator(coolTemp, 100, airDelivery, absolutePressure),
+	);
 	const condensateLoss = round(waterAmount - remainingHumidity);
-	const coldHumidity = waterAmountCalculator(dtp, 100, airDelivery, absolutePressure);
+	const coldHumidity = Math.min(
+		remainingHumidity,
+		waterAmountCalculator(dtp, 100, airDelivery, absolutePressure),
+	);
 	const coldLoss = round(remainingHumidity - coldHumidity);
 
 	const result = {

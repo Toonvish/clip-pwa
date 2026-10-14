@@ -12,7 +12,8 @@ interface FooterProps {
 const LINE_BREAK = '%0D%0A';
 
 // the mail bodies mark line breaks with %0D%0A, everything else has to be encoded (e.g. the % in "[%]")
-const encodeMailText = (text: string) => text.split(LINE_BREAK).map(encodeURIComponent).join(LINE_BREAK);
+export const encodeMailText = (text: string) =>
+	text.split(LINE_BREAK).map(encodeURIComponent).join(LINE_BREAK);
 
 const Footer: FC<FooterProps> = ({ resetValues, getEmail, subject }) => {
 	const email = useStore($email);
