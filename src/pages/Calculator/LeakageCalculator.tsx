@@ -64,14 +64,14 @@ const getEmail = (
 	switch (selected) {
 		case 'hole':
 			return `${base}
-Leckagestrom [l/min]: ${leakageValues.leakageCurrent}%0D%0A
+Leckagestrom Freiluft (1 bar abs, 20 °C) [l/min]: ${leakageValues.leakageCurrent}%0D%0A
 Bohrungsdurchmesser maximal [mm]: ${result?.[0]}%0D%0A
 Bohrungsdurchmesser minimal [mm]: ${result?.[1]}
 		`;
 		case 'leakageCurrent':
 			return `${base}
-Leckagestrom maximal [l/min]: ${result?.[0]}%0D%0A
-Leckagestrom minimal [l/min]: ${result?.[1]}%0D%0A
+Leckagestrom maximal Freiluft (1 bar abs, 20 °C) [l/min]: ${result?.[0]}%0D%0A
+Leckagestrom minimal Freiluft (1 bar abs, 20 °C) [l/min]: ${result?.[1]}%0D%0A
 Bohrungsdurchmesser [mm]: ${leakageValues.hole}
 		`;
 	}
@@ -144,7 +144,14 @@ const LeakageCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 				selected={selected}
 				onSelectChange={(selected) => setSelected(selected as SelectedLeakageValue)}
 			>
-				<LabelWrapper header={<RadioButton value={'leakageCurrent'} label={'Leckagestrom [l/min]:'} />}>
+				<LabelWrapper
+					header={
+						<RadioButton
+							value={'leakageCurrent'}
+							label={'Leckagestrom Freiluft (1 bar abs, 20 °C) [l/min]:'}
+						/>
+					}
+				>
 					{selected === 'leakageCurrent' ? (
 						<div className="flex flex-wrap gap-2">
 							<LabelWrapper label="Min:" className="result-display">

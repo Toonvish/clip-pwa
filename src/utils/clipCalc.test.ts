@@ -17,10 +17,19 @@ describe('leakageCalculator', () => {
 		expect(Math.abs(below - above) / above).toBeLessThan(1e-3);
 	});
 	it('uses the maximum outflow function of air (0.484) when choked', () => {
-		// 1 mm hole, 8 bar: m = A * 0.484 * sqrt(2 * p1 * rho), volume at p1 density
+		// 1 mm hole, 8 bar: m = A * 0.484 * sqrt(2 * p1 * rho), volume as free air (1 bar, 20 °C)
 		const rho = 800000 / 287.1 / 293;
-		const expected = ((Math.PI / 4) * 1e-6 * 0.484 * Math.sqrt(2 * 800000 * rho)) / rho;
+		const freeAirRho = 100000 / 287.1 / 293.15;
+		const expected = ((Math.PI / 4) * 1e-6 * 0.484 * Math.sqrt(2 * 800000 * rho)) / freeAirRho;
 		expect(leak(1)).toBeCloseTo(expected * 60000, 0);
+	});
+	it('matches the usual table value for a 1 mm hole at 7 bar(g) (about 1.2 l/s ideal)', () => {
+		expect(leak(1) / 60).toBeGreaterThan(1.1);
+		expect(leak(1) / 60).toBeLessThan(1.35);
+	});
+	it('calculates the hole back from the leakage', () => {
+		const leakage = leakageCalculator(8, 1, 20, 1.4, 287.1, 1.5, 0, 'leakageCurrent')[0];
+		expect(leakageCalculator(8, 1, 20, 1.4, 287.1, 0, leakage, 'hole')[1]).toBeCloseTo(1.5, 2);
 	});
 });
 

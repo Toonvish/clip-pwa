@@ -125,6 +125,8 @@ export function leakageCalculator(
 	const x = (2 / (kappa + 1)) ** kappa2;
 	const xA = x ** (1 / kappa);
 	const density = (pressureP1 * 100000) / gas / calcTemp;
+	// leakage is given as free air (ISO 1217 reference: 1 bar abs, 20 °C), not at line pressure
+	const freeAirDensity = 100000 / gas / 293.15;
 	let psi: number;
 	if (pressure >= x) {
 		psi = (kappa2 * pressureA ** 2 * (1 - pressureB)) ** 0.5;
@@ -134,13 +136,14 @@ export function leakageCalculator(
 	switch (toCalc) {
 		case 'leakageCurrent': {
 			const vv =
-				(((Math.PI * (hole / 1000) ** 2) / 4) * psi * (2 * pressureP1 * 100000 * density) ** 0.5) / density;
+				(((Math.PI * (hole / 1000) ** 2) / 4) * psi * (2 * pressureP1 * 100000 * density) ** 0.5) /
+				freeAirDensity;
 			const maximal = vv * 60 * 1000;
 			return [round(maximal), round(maximal * 0.59)];
 		}
 		case 'hole': {
 			const calcLeakage = leakageCurrent / 60000;
-			const area = (calcLeakage * density) / psi / (2 * pressureP1 * 100000 * density) ** 0.5;
+			const area = (calcLeakage * freeAirDensity) / psi / (2 * pressureP1 * 100000 * density) ** 0.5;
 			const minimal = (4 * (area / Math.PI)) ** 0.5 * 1000;
 			return [round(minimal / 0.59 ** 0.5), round(minimal)];
 		}
