@@ -26,8 +26,8 @@ type MediumValues<Type extends MediumType> = {
 
 const mediumValues: MediumValues<MediumType> = {
 	air: { gas: 287.1, kappa: 1.4 },
-	oxygen: { gas: 188.9, kappa: 1.29 },
-	carbonDioxide: { gas: 259.8, kappa: 1.4 },
+	oxygen: { gas: 259.8, kappa: 1.4 },
+	carbonDioxide: { gas: 188.9, kappa: 1.29 },
 };
 
 type LeakageValues = {
@@ -82,7 +82,10 @@ const LeakageCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 	const [selected, setSelected] = useState<SelectedLeakageValue>('hole');
 	const [medium, setMedium] = useState<ListOption<MediumType>>(mediumOptions[0]);
 	const [getLeakageValues, updateLeakageValues] = useUpdateValue(leakageValues, setLeakageValues);
-	const resetValues = () => setLeakageValues(defaultLeakageValues);
+	const resetValues = () => {
+		setLeakageValues(defaultLeakageValues);
+		setMedium(mediumOptions[0]);
+	};
 
 	const result = useMemo(() => {
 		const {
@@ -145,10 +148,10 @@ const LeakageCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 					{selected === 'leakageCurrent' ? (
 						<div className="flex flex-wrap gap-2">
 							<LabelWrapper label="Min:" className="result-display">
-								<Input disabled={true} value={result?.[0]} />
+								<Input disabled={true} value={result?.[1]} />
 							</LabelWrapper>
 							<LabelWrapper label="Max:" className="result-display">
-								<Input disabled={true} value={result?.[1]} />
+								<Input disabled={true} value={result?.[0]} />
 							</LabelWrapper>
 						</div>
 					) : (
@@ -162,10 +165,10 @@ const LeakageCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 					{selected === 'hole' ? (
 						<div className="flex flex-wrap gap-2">
 							<LabelWrapper label="Min:" className="result-display">
-								<Input disabled={true} value={result?.[0]} />
+								<Input disabled={true} value={result?.[1]} />
 							</LabelWrapper>
 							<LabelWrapper label="Max:" className="result-display">
-								<Input disabled={true} value={result?.[1]} />
+								<Input disabled={true} value={result?.[0]} />
 							</LabelWrapper>
 						</div>
 					) : (

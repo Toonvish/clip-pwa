@@ -16,7 +16,7 @@ export function calcRoomHeating(roomHeatingValues: RoomHeaterValues): RoomHeater
 		heatTransferEfficiency = 0,
 	} = roomHeatingValues;
 
-	const motorPowerUsage = motorOutputPower * (1 - motorEfficiency / 100) + motorOutputPower;
+	const motorPowerUsage = motorEfficiency > 0 ? motorOutputPower / (motorEfficiency / 100) : 0;
 	const availableOilPower = motorOutputPower * 0.72;
 	const availableAirPower = motorOutputPower * 0.94;
 	const heatPowerEfficiencyWithHeatTransfer = availableOilPower * (heatTransferEfficiency / 100);

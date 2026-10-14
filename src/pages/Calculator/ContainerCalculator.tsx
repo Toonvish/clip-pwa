@@ -33,7 +33,7 @@ const getEmail = (getValues: GetDocValue<ContainerValues>) => `
 	Zulässige Motorschaltspiele/h [1/h]:  ${getValues('engineTolerance')}%0D%0A
 	Ausschaltdruck des Kompressors [barÜ]:  ${getValues('offPressure')}%0D%0A
 	Einschaltdruck des Kompressors [barÜ]:  ${getValues('onPressure')}%0D%0A
-	Volumen des Druckluftbehälters [m³]:  ${getValues('volume')}
+	Volumen des Druckluftbehälters [l]:  ${getValues('volume')}
 `;
 
 const ContainerCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
@@ -116,7 +116,7 @@ const ContainerCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 			{hasFooter && (
 				<Footer
 					resetValues={resetValues}
-					subject="Behälter Leckage"
+					subject="Druckluftbehälter"
 					getEmail={() => getEmail(getCalcValue)}
 				/>
 			)}

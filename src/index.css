@@ -1,15 +1,15 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
-  --color-clip: #ff0000;
+	--color-clip: #ff0000;
 }
 
-input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
 }
 
 @layer components {
-  .result-display {
-    @apply flex-[2_1_420px];
-  }
+	.result-display {
+		@apply flex-[2_1_420px];
+	}
 }

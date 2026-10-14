@@ -99,7 +99,8 @@ export function airCurrentCalculator(
 		default:
 			result = 0;
 	}
-	result = round(result);
+	// areas are small numbers in m², two decimals would distort them
+	result = round(result, toCalc === 'area' ? 4 : 2);
 	return result;
 }
 
@@ -128,7 +129,7 @@ export function leakageCalculator(
 	if (pressure >= x) {
 		psi = (kappa2 * pressureA ** 2 * (1 - pressureB)) ** 0.5;
 	} else {
-		psi = (kappa2 * (xA ** 2 * (1 - xA))) ** 0.5;
+		psi = (kappa2 * (xA ** 2 * (1 - x ** kappa1))) ** 0.5;
 	}
 	switch (toCalc) {
 		case 'leakageCurrent': {
@@ -160,14 +161,12 @@ export function containerCalculator(
 	const mVolume = volume / 1000;
 	switch (toCalc) {
 		case 'volume':
-			return (
-				1000 *
-				round(
+			return round(
+				(1000 *
 					(deliveredAmount *
 						60 *
-						(necessaryAmount / deliveredAmount - (necessaryAmount / deliveredAmount) ** 2)) /
-						(engineTolerance * (offPressure - onPressure)),
-				)
+						(necessaryAmount / deliveredAmount - (necessaryAmount / deliveredAmount) ** 2))) /
+					(engineTolerance * (offPressure - onPressure)),
 			);
 		case 'engineTolerance':
 			return round(
@@ -240,9 +239,10 @@ export function condensateCalculator(
 	hours: number,
 ): CondensateResult {
 	const waterAmount = waterAmountCalculator(airTemp, humidity, airDelivery);
-	const remainingHumidity = waterAmountCalculator(coolTemp, 100, airDelivery, pressure);
+	const absolutePressure = pressure + 1;
+	const remainingHumidity = waterAmountCalculator(coolTemp, 100, airDelivery, absolutePressure);
 	const condensateLoss = round(waterAmount - remainingHumidity);
-	const coldHumidity = waterAmountCalculator(dtp, 100, airDelivery, pressure);
+	const coldHumidity = waterAmountCalculator(dtp, 100, airDelivery, absolutePressure);
 	const coldLoss = round(remainingHumidity - coldHumidity);
 
 	const result = {
@@ -252,7 +252,7 @@ export function condensateCalculator(
 		remainingHumidity: remainingHumidity * hours,
 		coldLoss: coldLoss * hours,
 	};
-	const totalLoss = waterAmount !== 0 && coldLoss !== 0 ? round(waterAmount - coldLoss) : 0;
+	const totalLoss = round((condensateLoss + coldLoss) * hours);
 
 	return { ...result, totalLoss };
 }

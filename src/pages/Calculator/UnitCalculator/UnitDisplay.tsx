@@ -1,6 +1,8 @@
 import NumberInput from '../../../controls/Inputs/NumberInput';
 import LabelWrapper from '../../../controls/LabelWrapper';
-import { round } from '../../../utils/helper';
+
+// keeps 6 significant digits so small values (e.g. 1 l/min in m³/s) are not rounded to 0
+const roundPrecise = (value: number) => Number(value.toPrecision(6));
 
 export type UnitType<Type, Key extends keyof Type = keyof Type> = {
 	[Property in Key]: {
@@ -28,17 +30,17 @@ interface UnitDisplayProps<Type> {
 
 const UnitDisplay = <Type,>({ unitValues, setUnitValues }: UnitDisplayProps<Type>) => {
 	const updateValue = (key: keyof Type) => (value: number | undefined) => {
-		if (!value) {
+		if (value === undefined || Number.isNaN(value)) {
 			setUnitValues({ ...unitValues, [key]: { ...unitValues[key], value } });
 			return;
 		}
 
 		const getValue = (fieldKey: keyof Type) => {
 			const modificator = unitValues[key].modificator;
-			if (typeof modificator === 'function') return round(modificator(value, fieldKey));
+			if (typeof modificator === 'function') return roundPrecise(modificator(value, fieldKey));
 			const fieldModificator = unitValues[fieldKey].modificator;
 			if (typeof fieldModificator === 'function') return value;
-			return round((value / modificator) * fieldModificator);
+			return roundPrecise((value / modificator) * fieldModificator);
 		};
 
 		const updatedValue: UnitType<Type> = { ...unitValues };

@@ -31,13 +31,13 @@ export const generateId = (length = 24) => {
 };
 
 /**
- * If the value is NaN or undefined return undefined
+ * If the value is NaN, infinite or undefined return undefined
  * @param value
  * @returns
  */
 export function checkNaN(value: number | undefined): number | undefined {
 	if (value === undefined) return undefined;
-	return Number.isNaN(value) ? undefined : value;
+	return Number.isFinite(value) ? value : undefined;
 }
 
 /**

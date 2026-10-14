@@ -73,19 +73,19 @@ const AirCurrentCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 	const resetValues = () => setAirCurrentValues(defaultAirCurrentValues);
 
 	const result = useMemo(() => {
-		const { volume = 0, velocity = 0, area = 0 } = airCurrentValues;
+		const { volume, velocity, area } = airCurrentValues;
 		//calculate the areaValue based on the given parameters
 		if (!hasRequiredValues({ volume, velocity, area }, selected)) return;
-		return airCurrentCalculator(volume, velocity, area, selected);
+		return airCurrentCalculator(volume ?? 0, velocity ?? 0, area ?? 0, selected);
 	}, [airCurrentValues, selected]);
 
 	const updateArea = (field: 'area' | 'width' | 'length' | 'diameter') => (value: number | undefined) => {
 		updateAirCurrentValues(field)(value);
 		if (value === undefined) return;
 		const { length, width } = airCurrentValues;
-		if (field === 'width' && length) updateAirCurrentValues('area')(round(length * value));
-		else if (field === 'length' && width) updateAirCurrentValues('area')(round(width * value));
-		else if (field === 'diameter') updateAirCurrentValues('area')(round((value / 2) ** 2 * Math.PI));
+		if (field === 'width' && length) updateAirCurrentValues('area')(round(length * value, 4));
+		else if (field === 'length' && width) updateAirCurrentValues('area')(round(width * value, 4));
+		else if (field === 'diameter') updateAirCurrentValues('area')(round((value / 2) ** 2 * Math.PI, 4));
 	};
 
 	const getCalcValue = <Key extends keyof AirCurrentValues>(key: Key) => {
@@ -131,7 +131,7 @@ const AirCurrentCalculator: FC<CalcProps> = ({ hasFooter = true }) => {
 					header={<RadioButton label="Empfohlene Geschwindigkeit [m/s]:" value={'velocity'} />}
 				/>
 				<ListSelect
-					disabled={selected === 'volume'}
+					disabled={selected === 'velocity'}
 					options={velocityOptions}
 					selected={selectedVelocity ?? velocityOptions[0]}
 					onOptionChange={(option) => updateAirCurrentValues('velocity')(option.value)}

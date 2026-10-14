@@ -18,7 +18,7 @@ const NumberInput: FC<NumberInputProps> = ({ max, min, number, onNumberChange, .
 			onNumberChange?.(undefined);
 			return;
 		}
-		const regex = new RegExp(/^[0-9]+\.?[0-9]*$/);
+		const regex = new RegExp(/^-?[0-9]*\.?[0-9]*$/);
 		const result = text.match(regex);
 		if (result === null) return;
 		let isChanged = false;

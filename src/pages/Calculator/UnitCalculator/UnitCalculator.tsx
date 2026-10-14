@@ -22,7 +22,7 @@ type PressureValues = {
 const pressureType: UnitType<PressureValues> = {
 	kpa: { label: 'Kpa', modificator: 1, value: undefined },
 	bar: { label: 'Bar', modificator: 0.01, value: undefined },
-	psi: { label: 'Psi', modificator: 0.145, value: undefined },
+	psi: { label: 'Psi', modificator: 0.145038, value: undefined },
 };
 
 type PowerValues = {
